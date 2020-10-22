@@ -6,6 +6,19 @@ library(ggplot2)
 
 # make function called sheet_sort with input: decades you want to see (eg. "1950s"), 
 # and output: heatmap of correlation between genres in that decade
+sheetList <- c()
+decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
+shit <- function(input, output) {
+  x <- read_excel("pivot_byDecade.xlsx",
+                  sheet = inpu)
+}
+for(i in 1:6){
+  y <- read_excel("pivot_byDecade.xlsx",
+                  sheet = decadeList[i])
+  append(sheetList, y)
+}
+sheetList[2]
+
 
 sheet_sort <- function(input) {
   # read excel with specific sheet (input decade) and store into df
