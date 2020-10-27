@@ -1,7 +1,6 @@
-library(heatmaply)
+library(d3heatmap)
 library(dplyr)
 library(tidyverse)
-library(readxl)
 library(ggplot2)
 
 #%in% makes multiple choices
@@ -23,22 +22,21 @@ library(ggplot2)
 
 #mycode
 decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
-sheet_sort <- function(decade) {
-  df        <- read_excel("pivot_byDecade.xlsx",
-                          sheet = decade)
-  df        <- data.frame(df)
-  df        <- df[,3:17]
-  df_plot   <- heatmaply_cor(cor(df),
-                             labRow = df$Genre)
-  #list_plot <- append(list_plot, df_plot)
-  return(df_plot)
-}
-#sheet_sort("1950s")
+#source("genre.R")
+tables <- readRDS("DecadeTables.RDS")
+names(tables) <- decadeList
 
+View(tables[["1950s"]])
+
+tables[1]
 function(input, output) {
-  output$heatmapPlot <- renderPlot({
-    
-    sheet_sort(input$decade)
+  output$heatmapPlot <- renderD3heatmap({
+    genre <- colnames(tables[[input$decade]])
+    d3heatmap(cor(tables[[input$decade]]),
+              labRow = genre,
+              colors = "Spectral")
     
   })
 }
+
+#heatmaply(data.frame(tables["1950s"]))

@@ -1,5 +1,6 @@
 library(shiny)
 library(shinydashboard)
+library(d3heatmap)
 #fluidPage(
 #  sidebarPanel(
 #    selectInput(inputId = "airline",
@@ -16,13 +17,15 @@ decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 
 
 dashboardPage(
-  dashboardHeader(title = ),
+  dashboardHeader(title = "Music Data"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Home",
-               tabName = "Home"),
+               tabName = "Home", 
+               icon = icon("home")),
       menuItem("income",
-               tabName = "Income"),
+               tabName = "Income",
+               icon = icon("widget")),
       menuItem("genre",
                tabName = "genre")
       
@@ -31,9 +34,18 @@ dashboardPage(
   ),
   dashboardBody(
     tabItems(
-      tabItem(tabName = "home"),
-      tabItem(tabName = "income"),
+      tabItem(tabName = "home",
+              #h2("Introduction to music data"),
+              fluidRow(
+                h2("Intro to music"),
+                box(title = "Introduction to music data", "what")
+                      )
+              ),
+      tabItem(tabName = "income",
+              h2("Income data")
+              ),
       tabItem(tabName = "genre",
+              he = "Genre data",
               fluidPage(
                 sidebarPanel(
                   selectInput(inputId = "decade",
@@ -41,7 +53,7 @@ dashboardPage(
                               choices = decadeList)
                 ),
                 mainPanel(
-                  plotOutput("heatmapPlot")
+                  d3heatmapOutput("heatmapPlot")
                 )
               ) 
               )
