@@ -32,3 +32,20 @@ names(tables) <- decadeList
 saveRDS(tables, "DecadeTables.RDS")
 
 
+color_tb <- data.frame(seq(-1,1,0.01), 1)
+color_tb
+colnames(color_tb) <- c("l", "r")
+
+tile <- ggplot(color_tb, aes(x=r, y=l)) + 
+  geom_tile(aes(fill = l), show.legend = FALSE) + 
+  scale_fill_gradient(low="green", high="red") +
+  theme(panel.background = element_blank(), 
+        axis.ticks.x     = element_blank(),
+        axis.title.x     = element_blank(),
+        axis.text.x      = element_blank(),
+        axis.ticks.y     = element_blank(),
+        axis.title.y     = element_blank(),
+        axis.text.y      = element_blank())
+tile_s <- ggsave(tile, device = NULL, width = 3, height = 6)
+ggsav
+tile_s

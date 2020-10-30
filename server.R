@@ -26,9 +26,7 @@ decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 tables <- readRDS("DecadeTables.RDS")
 names(tables) <- decadeList
 
-View(tables[["1950s"]])
 
-tables[1]
 function(input, output) {
   output$heatmapPlot <- renderD3heatmap({
     genre <- colnames(tables[[input$decade]])
@@ -36,7 +34,9 @@ function(input, output) {
               labRow = genre,
               colors = "Spectral")
     
-  })
+    
+  }),
+  output$
 }
 
 #heatmaply(data.frame(tables["1950s"]))

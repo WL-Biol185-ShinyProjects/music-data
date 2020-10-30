@@ -1,20 +1,8 @@
 library(shiny)
 library(shinydashboard)
 library(d3heatmap)
-#fluidPage(
-#  sidebarPanel(
-#    selectInput(inputId = "airline",
-#                label   = "Select airlines:",
-#                choices = unique(flights$carrier))
-#  ),
-#  mainPanel(
-#    plotOutput("distancePlot",
-#               click = "distancePlotClick"),
-#    dataTableOutput("flightInfo")
-#  )
-#)
-decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 
+decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 
 dashboardPage(
   dashboardHeader(title = "Music Data"),
@@ -30,34 +18,65 @@ dashboardPage(
                tabName = "genre")
       
     )
-    
   ),
   dashboardBody(
     tabItems(
       tabItem(tabName = "home",
-              #h2("Introduction to music data"),
-              fluidRow(
-                h2("Intro to music"),
-                box(title = "Introduction to music data", "what")
-                      )
-              ),
+        fluidRow(
+          box(
+            title = "Introduction to music data", 
+            "what"
+          )
+        )
+      ),
       tabItem(tabName = "income",
-              h2("Income data")
-              ),
+        fluidRow(
+          box(
+            title = "Introduction to music data", 
+            "here is income data"
+          ),
+          box(
+            title = "sth else",
+            "this contains sth else"
+          )
+        )
+      ),
       tabItem(tabName = "genre",
-              he = "Genre data",
-              fluidPage(
-                sidebarPanel(
-                  selectInput(inputId = "decade",
-                              label = "Select decade:",
-                              choices = decadeList)
-                ),
-                mainPanel(
-                  d3heatmapOutput("heatmapPlot")
-                )
-              ) 
-              )
+        fluidRow(
+          box(
+            title = "genre data",
+            background = "light-blue",
+            "here is genre data"
+          ),
+          box(
+            title = "data source",
+            background = "yellow",
+            "here is how to read the data"
+          )
+        ),
+        fluidRow(
+          sidebarPanel(
+            selectInput(
+              inputId = "decade",
+              label = "Select decade:",
+              choices = decadeList
+            )
+          ),
+          mainPanel(
+            d3heatmapOutput("heatmapPlot"),
+            p("genre",
+              style = "writing-mode: vertical-rl; text-orientation: mixed;"
+            )
+          ),
+          
+          p("genre",
+            style = "text-align: center;"
+          )
+        )
+      ) 
     )
   )
 )
+
+
 
