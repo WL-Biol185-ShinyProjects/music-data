@@ -4,15 +4,17 @@ library(d3heatmap)
 
 decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 
+units_g <- readRDS("units.RDS")
+
 dashboardPage(
   dashboardHeader(title = "Music Data"),
   dashboardSidebar(
     sidebarMenu(
       menuItem("Home",
-               tabName = "Home", 
+               tabName = "home", 
                icon = icon("home")),
       menuItem("income",
-               tabName = "Income",
+               tabName = "income",
                icon = icon("widget")),
       menuItem("genre",
                tabName = "genre")
@@ -32,12 +34,26 @@ dashboardPage(
       tabItem(tabName = "income",
         fluidRow(
           box(
-            title = "Introduction to music data", 
+            title = "Introduction to music data",
+            background = "light-blue",
             "here is income data"
           ),
           box(
             title = "sth else",
+            background = "yellow",
             "this contains sth else"
+          )
+        ),
+        fluidRow(
+          sidebarPanel(
+            selectInput(
+              inputId = "unit_type",
+              label = "Select unit:",
+              choices = unique(units_g$unit_type),
+              multiple = TRUE)
+          ),
+          mainPanel(
+            plotOutput("incomePlot"),
           )
         )
       ),
@@ -63,14 +79,7 @@ dashboardPage(
             )
           ),
           mainPanel(
-            d3heatmapOutput("heatmapPlot"),
-            p("genre",
-              style = "writing-mode: vertical-rl; text-orientation: mixed;"
-            )
-          ),
-          
-          p("genre",
-            style = "text-align: center;"
+            d3heatmapOutput("heatmapPlot")
           )
         )
       ) 
