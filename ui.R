@@ -48,12 +48,17 @@ dashboardPage(
           sidebarPanel(
             selectInput(
               inputId = "unit_type",
-              label = "Select unit:",
+              label = "Select Unit Format:",
               choices = unique(units_g$unit_type),
               multiple = TRUE)
           ),
           mainPanel(
-            plotOutput("incomePlot"),
+            #plotOutput("incomePlot",
+            #click = "plot_click"),
+            #verbatimTextOutput("info_click")
+            plotOutput("incomePlot",
+            brush = "plot_brush"),
+            verbatimTextOutput("info_brush")
           )
         )
       ),
@@ -79,7 +84,8 @@ dashboardPage(
             )
           ),
           mainPanel(
-            d3heatmapOutput("heatmapPlot")
+            d3heatmapOutput("heatmapPlot"),
+            plotOutput("colorLegend")
           )
         )
       ) 

@@ -26,6 +26,10 @@ decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 tables <- readRDS("DecadeTables.RDS")
 names(tables) <- decadeList
 
+color_tb <- data.frame(seq(-1,1,0.01), 1)
+color_tb
+colnames(color_tb) <- c("l", "r")
+
 units_g <- readRDS("units.RDS")
 View(units_g)
 units_g <- na.omit(units_g)
@@ -37,20 +41,40 @@ function(input, output) {
               labRow = genre,
               colors = "Spectral")
   })
+    
+  output$colorLegend <- renderPlot({
+    ggplot(color_tb, aes(x=r, y=l)) + 
+    geom_tile(aes(fill = l), show.legend = FALSE) + 
+    scale_fill_gradientn(colors = Spectral(50)) +
+    theme(panel.background = element_blank(), 
+          axis.ticks.x     = element_blank(),
+          axis.title.x     = element_blank(),
+          axis.text.x      = element_blank(),
+          axis.ticks.y     = element_blank(),
+          axis.title.y     = element_blank(),
+          axis.text.y      = element_blank())
+  })
   
   output$incomePlot <- renderPlot({
-     units_g %>%
+    units_g %>%
       filter(unit_type %in% input$unit_type) %>%
       ggplot(aes(x = as.numeric(year), y = as.numeric(units), color = unit_type, group = unit_type)) + 
       geom_line() + 
       geom_point(aes(color = unit_type)) +
-      xlim(1973,2019) +
-      ylim(0,1402.739) +
-      xlab("year") +
-      ylab("units")
+      #xlim(1973,2019) +
+      #ylim(0,1402.739) +
+      xlab("Year") +
+      ylab("Units (In Millions)") +
+      labs(color = 'Format')
+  })
+  #output$info_click <- renderText({
+    #xclick          <- input$plot_click$x
+    #yclick          <- input$plot_click$y
+    #nearPoints(units_g, input$plot_click,
+              # xvar = "year", yvar = "units")
+  #})
+  output$info_brush <- renderPrint({
+    brushedPoints(units_g, input$plot_brush,
+                  xvar = "year", yvar = "units")
   })
 }
-
-
-
-#heatmaply(data.frame(tables["1950s"]))
