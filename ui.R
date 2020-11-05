@@ -5,6 +5,8 @@ library(d3heatmap)
 decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 
 units_g <- readRDS("units.RDS")
+value_g <- readRDS("value.RDS")
+
 
 dashboardPage(
   dashboardHeader(title = "Music Data"),
@@ -45,20 +47,34 @@ dashboardPage(
           )
         ),
         fluidRow(
-          sidebarPanel(
-            selectInput(
-              inputId = "unit_type",
-              label = "Select Unit Format:",
-              choices = unique(units_g$unit_type),
-              multiple = TRUE)
-          ),
           mainPanel(
+            tabsetPanel(type = "tabs",
+                        tabPanel("Units", plotOutput("unitPlot",
+                                                     brush = "plot_brush"),
+                                 verbatimTextOutput("info_brush"),
+                                 selectInput(
+                                   inputId = "unit_type",
+                                   label = "Select Unit Format:",
+                                   choices = unique(units_g$unit_type),
+                                   multiple = TRUE)
+                                 ),
+                        tabPanel("Value", 
+                                 selectInput(
+                                   inputId = "value_type",
+                                   label = "Select Value Format:",
+                                   choices = unique(value_g[["yes_inf"]]$value_type),
+                                   multiple = TRUE
+                                 ),
+                                 radioButtons("inf", "choose adjusted for inflation or not:",
+                                              c("Value not adjusted for inflation" = "not_inf",
+                                                "Value adjusted for inflation" = "yes_inf")
+                                 ),
+                                 plotOutput("valuePlot")
+                        )
             #plotOutput("incomePlot",
             #click = "plot_click"),
             #verbatimTextOutput("info_click")
-            plotOutput("incomePlot",
-            brush = "plot_brush"),
-            verbatimTextOutput("info_brush")
+            )
           )
         )
       ),

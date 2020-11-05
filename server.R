@@ -33,6 +33,9 @@ colnames(color_tb) <- c("l", "r")
 units_g <- readRDS("units.RDS")
 View(units_g)
 units_g <- na.omit(units_g)
+value_g <- readRDS("value.RDS")
+value_g <- na.omit(value_g)
+
 
 function(input, output) {
   output$heatmapPlot <- renderD3heatmap({
@@ -55,7 +58,7 @@ function(input, output) {
           axis.text.y      = element_blank())
   })
   
-  output$incomePlot <- renderPlot({
+  output$unitPlot <- renderPlot({
     units_g %>%
       filter(unit_type %in% input$unit_type) %>%
       ggplot(aes(x = as.numeric(year), y = as.numeric(units), color = unit_type, group = unit_type)) + 
@@ -67,6 +70,18 @@ function(input, output) {
       ylab("Units (In Millions)") +
       labs(color = 'Format')
   })
+  
+  output$valuePlot <- renderPlot({
+    value_g[[input$inf]] %>%
+      filter(value_type %in% input$value_type) %>%
+      ggplot(aes(x = as.numeric(year), y = as.numeric(values), color = value_type, group = value_type)) + 
+      geom_line() + 
+      geom_point(aes(color = value_type)) +
+      xlab("Year") +
+      ylab("Value (In $?)") +
+      labs(color = 'Format')
+  })
+  
   #output$info_click <- renderText({
     #xclick          <- input$plot_click$x
     #yclick          <- input$plot_click$y
