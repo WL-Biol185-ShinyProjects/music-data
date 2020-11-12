@@ -33,7 +33,8 @@ colnames(color_tb) <- c("l", "r")
 units_g <- readRDS("units.RDS")
 units_g <- na.omit(units_g)
 value_g <- readRDS("value.RDS")
-value_g <- na.omit(value_g[[2]])
+value_g[["not_inf"]] <- na.omit(value_g[["not_inf"]])
+value_g[["yes_inf"]] <- na.omit(value_g[["yes_inf"]])
 
 function(input, output) {
   output$heatmapPlot <- renderD3heatmap({
@@ -77,7 +78,7 @@ function(input, output) {
       geom_point(aes(color = value_type)) +
       xlim(input$year_slider[1], input$year_slider[2]) +
       xlab("Year") +
-      ylab("Value (In $?)") +
+      ylab("Value (In $)") +
       labs(color = 'Format')
   })
   
@@ -87,10 +88,6 @@ function(input, output) {
     #nearPoints(units_g, input$plot_click,
               # xvar = "year", yvar = "units")
   #})
-  output$info_brush_value <- renderPrint({
-    brushedPoints(value_g[[input$inf]], input$plot_brush,
-                  xvar = "year", yvar = "values")
-  })
   
   output$info_brush <- renderPrint({
     brushedPoints(units_g %>%

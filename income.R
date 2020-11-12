@@ -14,7 +14,6 @@ row.names(units_t) <- units_t[,1]
 units_t <- data.frame(units_t[2:48, 2:18])
 units_t$year <- row.names(units_t)
 units_g <- gather(units_t, key = "unit_type", value = "units", CD:Paid.Subscriptions)
-View(units_g)
 units_g[24:30,3] <- abs(units_g[24:30,3])
 units_g$year <- as.integer(units_g$year)
 
@@ -33,8 +32,8 @@ value_sheets <- function(input){
   df_t$year <- row.names(df_t)
   df_g <- gather(df_t, key = "value_type", value = "values", CD:Synchronization)
   df_g$year <- as.integer(df_g$year)
-  df$values[df$values == "-"] <- NA
-  df$values <- abs(df$values)
+  df_g$values <- as.numeric(df_g$values)
+  df_g$values <- abs(df_g$values)
   return(df_g)
 }
 
@@ -44,7 +43,7 @@ inf_table <- list("not_inf" = value_sheets("Value"),
                   "yes_inf" = value_sheets("Value adjusted for inflation")
 )
 
-
+View(inf_table[["not_inf"]])
 
 saveRDS(inf_table, "value.RDS")
 
