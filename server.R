@@ -3,26 +3,7 @@ library(dplyr)
 library(tidyverse)
 library(ggplot2)
 
-#%in% makes multiple choices
-
-#function(input, output) {
-#  output$distancePlot <- renderPlot({
-#    flights %>%
-#      filter(carrier %in% input$airline) %>%
-#      ggplot(aes(distance, air_time)) +
-#      geom_point()
-#  })
-#  output$flightInfo <- renderDataTable({
-#    clickEvent <- input$distancePlotClick
-#    flights %>%
-#      filter(carrier %in% input$airline) %>%
-#      nearPoints(clickEvent)
-#  })
-#}
-
-#mycode
 decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
-#source("genre.R")
 tables <- readRDS("DecadeTables.RDS")
 names(tables) <- decadeList
 
@@ -43,19 +24,6 @@ function(input, output) {
               labRow = genre,
               colors = "Spectral")
   })
-    
-  #output$colorLegend <- renderPlot({
-    #ggplot(color_tb, aes(x=r, y=l)) + 
-    #geom_tile(aes(fill = l), show.legend = FALSE) + 
-    #scale_fill_gradientn(colors = Spectral(50)) +
-    #theme(panel.background = element_blank(), 
-          #axis.ticks.x     = element_blank(),
-          #axis.title.x     = element_blank(),
-          #axis.text.x      = element_blank(),
-          #axis.ticks.y     = element_blank(),
-          #axis.title.y     = element_blank(),
-          #axis.text.y      = element_blank())
-  #})
   
   output$unitPlot <- renderPlot({
     units_g %>%
@@ -81,13 +49,6 @@ function(input, output) {
       ylab("Value (In $)") +
       labs(color = 'Format')
   })
-  
-  #output$info_click <- renderText({
-    #xclick          <- input$plot_click$x
-    #yclick          <- input$plot_click$y
-    #nearPoints(units_g, input$plot_click,
-              # xvar = "year", yvar = "units")
-  #})
   
   output$info_brush <- renderPrint({
     brushedPoints(units_g %>%
