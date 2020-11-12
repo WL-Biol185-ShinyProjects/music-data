@@ -7,7 +7,6 @@ decadeList <- c("1950s", "1960s", "1970s", "1980s", "1990s", "2000s")
 units_g <- readRDS("units.RDS")
 value_g <- readRDS("value.RDS")
 
-
 dashboardPage(
   dashboardHeader(title = "Music Data"),
   dashboardSidebar(
@@ -15,11 +14,12 @@ dashboardPage(
       menuItem("Home",
                tabName = "home", 
                icon = icon("home")),
-      menuItem("income",
+      menuItem("US Music Sales: 1973-2019",
                tabName = "income",
-               icon = icon("widget")),
-      menuItem("genre",
-               tabName = "genre")
+               icon = icon("dollar")),
+      menuItem("Genre Similarity: 1950s-2000s",
+               tabName = "genre",
+               icon = icon("music"))
       
     )
   ),
@@ -36,14 +36,16 @@ dashboardPage(
       tabItem(tabName = "income",
         fluidRow(
           box(
-            title = "Introduction to music data",
+            title = "United States Recorded Music Sales Volumes and Revenue by Format",
             background = "light-blue",
-            "here is income data"
+            "The formats (CD, Vinyl, Downloaded Albums, Streaming Services, etc.) that
+            people use to listen to music have evolved over the years. We aimed to
+            visualize this evolution by using datasets that "
           ),
           box(
-            title = "sth else",
+            title = "Something Else",
             background = "yellow",
-            "this contains sth else"
+            ""
           )
         ),
         fluidRow(
@@ -58,10 +60,10 @@ dashboardPage(
                                    choices = unique(units_g$unit_type),
                                    multiple = TRUE)
                                  ),
-                        tabPanel("Value", 
+                        tabPanel("Revenue",  
                                  selectInput(
                                    inputId = "value_type",
-                                   label = "Select Value Format:",
+                                   label = "Select Revenue Format:",
                                    choices = unique(value_g[["yes_inf"]]$value_type),
                                    multiple = TRUE
                                  ),
@@ -69,7 +71,9 @@ dashboardPage(
                                               c("Value not adjusted for inflation" = "not_inf",
                                                 "Value adjusted for inflation" = "yes_inf")
                                  ),
-                                 plotOutput("valuePlot")
+                                 plotOutput("valuePlot",
+                                            brush = "plot_brush"),
+                                 verbatimTextOutput("info_brush_value")
                         )
             #plotOutput("incomePlot",
             #click = "plot_click"),
@@ -81,14 +85,23 @@ dashboardPage(
       tabItem(tabName = "genre",
         fluidRow(
           box(
-            title = "genre data",
+            title = "Changes in Genre Similarity by Decade: 1950s-2000s",
             background = "light-blue",
-            "here is genre data"
+            "The similarity between different musical genres has been changing
+             throughout the past several decades. We aimed to visualize these changes
+             using a dataset that shows how many songs per decade (1950s-2000s) were
+             cross-tagged as two different genres. We visualized these changes on an 
+             interactive heatmap using hierarchical clustering via a dendrogram to
+             calculate a Pearson correlation coefficient (between -1 and 1)."
           ),
           box(
-            title = "data source",
+            title = "Pearson Correlation Coefficient",
             background = "yellow",
-            "here is how to read the data"
+            "High Value = High Correlation Between Genres", tags$br(),
+            "Low Value = Low Correlation Between Genres", tags$br(), tags$br(),
+            "Value = 1: Total Positive Linear Correlation", tags$br(),
+            "Value = 0: No Linear Correlation", tags$br(),
+            "Value = -1: Total Negative Linear Correlation"
           )
         ),
         fluidRow(
@@ -100,8 +113,8 @@ dashboardPage(
             )
           ),
           mainPanel(
-            d3heatmapOutput("heatmapPlot"),
-            plotOutput("colorLegend")
+            d3heatmapOutput("heatmapPlot")
+            #plotOutput("colorLegend")
           )
         )
       ) 

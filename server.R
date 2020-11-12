@@ -45,18 +45,18 @@ function(input, output) {
               colors = "Spectral")
   })
     
-  output$colorLegend <- renderPlot({
-    ggplot(color_tb, aes(x=r, y=l)) + 
-    geom_tile(aes(fill = l), show.legend = FALSE) + 
-    scale_fill_gradientn(colors = Spectral(50)) +
-    theme(panel.background = element_blank(), 
-          axis.ticks.x     = element_blank(),
-          axis.title.x     = element_blank(),
-          axis.text.x      = element_blank(),
-          axis.ticks.y     = element_blank(),
-          axis.title.y     = element_blank(),
-          axis.text.y      = element_blank())
-  })
+  #output$colorLegend <- renderPlot({
+    #ggplot(color_tb, aes(x=r, y=l)) + 
+    #geom_tile(aes(fill = l), show.legend = FALSE) + 
+    #scale_fill_gradientn(colors = Spectral(50)) +
+    #theme(panel.background = element_blank(), 
+          #axis.ticks.x     = element_blank(),
+          #axis.title.x     = element_blank(),
+          #axis.text.x      = element_blank(),
+          #axis.ticks.y     = element_blank(),
+          #axis.title.y     = element_blank(),
+          #axis.text.y      = element_blank())
+  #})
   
   output$unitPlot <- renderPlot({
     units_g %>%
@@ -88,8 +88,15 @@ function(input, output) {
     #nearPoints(units_g, input$plot_click,
               # xvar = "year", yvar = "units")
   #})
+  output$info_brush_value <- renderPrint({
+    brushedPoints(value_g[[input$inf]], input$plot_brush,
+                  xvar = "year", yvar = "values")
+  })
+  
   output$info_brush <- renderPrint({
     brushedPoints(units_g, input$plot_brush,
                   xvar = "year", yvar = "units")
   })
+  
 }
+
