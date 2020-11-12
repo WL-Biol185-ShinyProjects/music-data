@@ -47,16 +47,27 @@ dashboardPage(
           )
         ),
         fluidRow(
+          sidebarPanel(
+            sliderInput(inputId = "year_slider",
+                        label = "Select years to display:",
+                        min = 1973,
+                        max = 2019,
+                        value = c(1973, 2019)
+            )
+          ),
           mainPanel(
             tabsetPanel(type = "tabs",
-                        tabPanel("Units", plotOutput("unitPlot",
-                                                     brush = "plot_brush"),
-                                 verbatimTextOutput("info_brush"),
+                        
+                            
+                        tabPanel("Units", 
                                  selectInput(
                                    inputId = "unit_type",
                                    label = "Select Unit Format:",
                                    choices = unique(units_g$unit_type),
-                                   multiple = TRUE)
+                                   multiple = TRUE),
+                                 plotOutput("unitPlot",
+                                             brush = "plot_brush"),
+                                 verbatimTextOutput("info_brush")
                                  ),
                         tabPanel("Value", 
                                  selectInput(
@@ -69,7 +80,9 @@ dashboardPage(
                                               c("Value not adjusted for inflation" = "not_inf",
                                                 "Value adjusted for inflation" = "yes_inf")
                                  ),
-                                 plotOutput("valuePlot")
+                                 plotOutput("valuePlot",
+                                            brush = "plot_brush"),
+                                 verbatimTextOutput("value_brush")
                         )
             #plotOutput("incomePlot",
             #click = "plot_click"),

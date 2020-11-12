@@ -31,11 +31,9 @@ color_tb
 colnames(color_tb) <- c("l", "r")
 
 units_g <- readRDS("units.RDS")
-View(units_g)
 units_g <- na.omit(units_g)
 value_g <- readRDS("value.RDS")
-value_g <- na.omit(value_g)
-
+value_g <- na.omit(value_g[[2]])
 
 function(input, output) {
   output$heatmapPlot <- renderD3heatmap({
@@ -64,7 +62,7 @@ function(input, output) {
       ggplot(aes(x = as.numeric(year), y = as.numeric(units), color = unit_type, group = unit_type)) + 
       geom_line() + 
       geom_point(aes(color = unit_type)) +
-      #xlim(1973,2019) +
+      xlim(input$year_slider[1], input$year_slider[2]) +
       #ylim(0,1402.739) +
       xlab("Year") +
       ylab("Units (In Millions)") +
@@ -77,6 +75,7 @@ function(input, output) {
       ggplot(aes(x = as.numeric(year), y = as.numeric(values), color = value_type, group = value_type)) + 
       geom_line() + 
       geom_point(aes(color = value_type)) +
+      xlim(input$year_slider[1], input$year_slider[2]) +
       xlab("Year") +
       ylab("Value (In $?)") +
       labs(color = 'Format')
@@ -89,7 +88,15 @@ function(input, output) {
               # xvar = "year", yvar = "units")
   #})
   output$info_brush <- renderPrint({
-    brushedPoints(units_g, input$plot_brush,
+    brushedPoints(units_g %>%
+                    filter(unit_type %in% input$unit_type), 
+                  input$plot_brush,
                   xvar = "year", yvar = "units")
+  })
+  output$value_brush <- renderPrint({
+    brushedPoints(value_g[[input$inf]] %>%
+                    filter(value_type %in% input$value_type), 
+                  input$plot_brush,
+                  xvar = "year", yvar = "values")
   })
 }
