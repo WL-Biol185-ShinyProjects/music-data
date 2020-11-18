@@ -39,7 +39,7 @@ dashboardPage(
           ),
           box(
             img(
-              src = "music.jpg"
+              src = "music2.jpg"
             )
           )
         )
