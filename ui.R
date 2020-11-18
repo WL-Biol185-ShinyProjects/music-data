@@ -148,7 +148,8 @@ dashboardPage(
             box(
               title = "US Music Sales Data",
               "Bass, M. (2020). U.S. Sales Database. RIAA. Retrieved November 18,
-              2020, from https://www.riaa.com/u-s-sales-database/"
+              2020, from ",
+              a("RIAA", href = "https://www.riaa.com/u-s-sales-database/")
               )
          ),
          fluidRow(
@@ -156,8 +157,8 @@ dashboardPage(
               title = "Genre Similarity Data",
               solidHeader = TRUE,
               "Mani, S. (2017). C3shouvikmani/Million-Song-Dataset-Visualization.
-              GitHub. Retrieved November 18, 2020, from
-              https://github.com/c3shouvikmani/Million-Song-Dataset-Visualization"
+              GitHub. Retrieved November 18, 2020, from ",
+              a("Github", href = "https://github.com/c3shouvikmani/Million-Song-Dataset-Visualization")
           )
         )
       )
