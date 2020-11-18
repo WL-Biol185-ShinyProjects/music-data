@@ -35,7 +35,7 @@ dashboardPage(
             "The field of music has changed vastly over the years.", 
             "This includes the way people listen to music, as the platform in which people listen music to changed from vinyls and CDs to streaming services like Spotify or Apple Music.", 
             "In our \"Income\" tab, we are visualizing this change by tracking how musicians earn income.",
-            "In our \"Genre\" tab, we are visualizing the change in musical elements like timbre and loudness between genres from the 1950s to 2000s"
+            "In our \"Genre\" tab, we are visualizing the change in musical elements like timbre and loudness between genres from the 1950s to 2000s."
           ),
           box(
             img(
