@@ -29,7 +29,15 @@ dashboardPage(
         fluidRow(
           box(
             title = "Introduction to music data", 
-            "what"
+            "The field of music has changed vastly over the years.", 
+            "This includes the way people listen to music, as the platform in which people listen music to changed from vinyls and CDs to streaming services like Spotify or Apple Music.", 
+            "In our \"Income\" tab, we are visualizing this change by tracking how musicians earn income.",
+            "In our \"Genre\" tab, we are visualizing the change in musical elements like timbre and loudness between genres from the 1950s to 2000s"
+          ),
+          box(
+            img(
+              src = "music.jpg"
+            )
           )
         )
       ),
@@ -43,9 +51,9 @@ dashboardPage(
             visualize this evolution by using datasets that "
           ),
           box(
-            title = "Something Else",
+            title = "How to Use This Page",
             background = "yellow",
-            ""
+            "Click the 'Units' tab to view "
           )
         ),
         fluidRow(
